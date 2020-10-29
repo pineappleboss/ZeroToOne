@@ -24,6 +24,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         Subject subject=SecurityUtils.getSubject();
         //将可以理解为进行过login 之后session进行验证
         if(!subject.isAuthenticated()){
+
             //验证不通过不放行
             return  false;
         }
