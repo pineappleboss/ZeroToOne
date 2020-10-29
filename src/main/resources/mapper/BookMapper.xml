@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.dao.LibraryMapper">
+
+    <select id="getAll" resultType="com.example.model.Book">
+        select * from books
+    </select>
+    <insert id="saveBook" parameterType="com.example.model.Book" >
+        INSERT INTO auth.books
+        (id, title, author, `date`, press, abs, cid)
+        VALUES(#{id}, #{title}, #{author}, #{date}, #{press}, #{abs}, #{cid});
+    </insert>
+</mapper>
