@@ -1,5 +1,6 @@
 package com.example.controller;
 
+import com.example.model.AdminMenu;
 import com.example.model.User;
 import com.example.service.UserService;
 import com.example.utils.AjaxResult;
@@ -13,6 +14,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.HtmlUtils;
 
 import javax.annotation.Resource;
+import java.util.List;
+
+/**
+ * @author tkq
+ */
 @CrossOrigin
 @RestController
 public class UserController {
@@ -89,4 +95,14 @@ public class UserController {
         return new AjaxResult(200,null,"验证成功");
     }
 
+    /**
+     * 查询菜单
+     * @param user
+     * @return
+     */
+    @PostMapping("/api/menu")
+    public AjaxResult getAdminMenu(@RequestBody  User user){
+        List<AdminMenu> list=userServiceImpl.getAdminMenu(user);
+        return  new AjaxResult(200,list,"");
+    }
 }

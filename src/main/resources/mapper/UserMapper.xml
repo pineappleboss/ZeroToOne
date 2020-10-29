@@ -13,4 +13,7 @@
     <select id="findByUsername" parameterType="String" resultType="com.example.model.User">
         select * from auth.`user` where username = #{username}
     </select>
+    <select id="getAdminMenu" parameterType="com.example.model.User" resultType="com.example.model.AdminMenu">
+        select * from adminmenu where rid in(select id from role where uid = (select id from user where username=#{username}))
+    </select>
 </mapper>
