@@ -1,6 +1,7 @@
 package com.example.service;
 
 import com.example.model.AdminMenu;
+import com.example.model.Permission;
 import com.example.model.User;
 
 import java.util.List;
@@ -15,4 +16,8 @@ public interface UserService {
     public void add(User user);
 
     public List<AdminMenu> getAdminMenu(User user);
+
+    public List<Permission> getPermission(User user);
+
+    public List<User> getAlluser();
 }

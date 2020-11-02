@@ -3,6 +3,7 @@ package com.example.service.Impl;
 
 import com.example.dao.UserMapper;
 import com.example.model.AdminMenu;
+import com.example.model.Permission;
 import com.example.model.User;
 import com.example.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,4 +57,30 @@ public class UserServiceImpl implements UserService {
         return list;
     }
 
+    /**
+     * 获取所有用户权限
+     * @param user
+     * @return
+     */
+    @Override
+    public List<Permission> getPermission(User user) {
+        List list=userMapper.getPermission(user);
+        return  userMapper.getPermission(user);
+    }
+
+    @Override
+    public List<User> getAlluser() {
+
+        return userMapper.findAllUser();
+    }
+
+    /**
+     * 判断此接口是否是用户拥有的
+     * @param UrlName
+     * @return
+     */
+     public boolean is(String UrlName){
+
+            return  true;
+     }
 }

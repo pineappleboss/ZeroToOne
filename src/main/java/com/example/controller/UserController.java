@@ -75,7 +75,7 @@ public class UserController {
     /**
      * 用户退出
      * 同样重点在于subject.logout()
-     * @param user
+     * @param
      * @return
      */
     @GetMapping("/api/logout")
@@ -104,5 +104,16 @@ public class UserController {
     public AjaxResult getAdminMenu(@RequestBody  User user){
         List<AdminMenu> list=userServiceImpl.getAdminMenu(user);
         return  new AjaxResult(200,list,"");
+    }
+    /**
+     * 用户接口查询
+     */
+    public AjaxResult getPermission(@RequestBody User user){
+        return new AjaxResult(200,userServiceImpl.getPermission(user),"查询用户接口成功");
+    }
+    @GetMapping("/api/user")
+    public AjaxResult getAllUser(){
+
+        return new AjaxResult(200,userServiceImpl.getAlluser(),"查询全部用户信息成功");
     }
 }
