@@ -114,6 +114,6 @@ public class UserController {
     @GetMapping("/api/user")
     public AjaxResult getAllUser(){
 
-        return new AjaxResult(200,userServiceImpl.getAlluser(),"👳‍查询全部用户信息成功##");
+        return new AjaxResult(200,userServiceImpl.getAlluser(),"&&&‍查询全部用户信息成功##");
     }
 }
