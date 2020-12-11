@@ -74,6 +74,12 @@ public class UserServiceImpl implements UserService {
         return userMapper.findAllUser();
     }
 
+    @Override
+    public User getUserById(String id) {
+
+        return userMapper.getUserById(id);
+    }
+
     /**
      * 判断此接口是否是用户拥有的
      * @param UrlName

@@ -100,7 +100,7 @@ public class UserController {
      * @param user
      * @return
      */
-    @PostMapping("/api/menu")
+    @GetMapping("/api/menu")
     public AjaxResult getAdminMenu(@RequestBody  User user){
         List<AdminMenu> list=userServiceImpl.getAdminMenu(user);
         return  new AjaxResult(200,list,"");
@@ -116,4 +116,10 @@ public class UserController {
 
         return new AjaxResult(200,userServiceImpl.getAlluser(),"***Jenkins测试01##");
     }
+    @GetMapping("/api/user/{id}")
+    public AjaxResult getUserById(@PathVariable("id") String id){
+
+        return new AjaxResult(200,userServiceImpl.getUserById(id),"***Jenkins测试01##");
+    }
+
 }

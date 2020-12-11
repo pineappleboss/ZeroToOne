@@ -29,4 +29,6 @@ public interface UserMapper {
      * @return
      */
     List<Permission> getPermission(User user);
+
+    User getUserById(String id);
 }

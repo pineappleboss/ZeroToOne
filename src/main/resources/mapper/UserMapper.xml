@@ -31,4 +31,7 @@
     <select id="getPermission" parameterType="com.example.model.User" resultType="com.example.model.Permission">
         select * from permission where id in(select id from role_permission_rep where rid in(select id from role where rid in (select id from user where username=#{username})))
     </select>
+    <select id="getUserById" parameterType="String" resultType="com.example.model.User">
+        select * from user where id=#{id}
+    </select>
 </mapper>
