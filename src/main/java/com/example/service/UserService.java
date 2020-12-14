@@ -22,4 +22,6 @@ public interface UserService {
     public List<User> getAlluser();
 
     public User getUserById(String id);
+
+    public User getUserByToken(String token);
 }

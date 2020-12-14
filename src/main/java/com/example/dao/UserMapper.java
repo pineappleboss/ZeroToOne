@@ -31,4 +31,6 @@ public interface UserMapper {
     List<Permission> getPermission(User user);
 
     User getUserById(String id);
+
+    User getUserByToken(String token);
 }

@@ -80,6 +80,13 @@ public class UserServiceImpl implements UserService {
         return userMapper.getUserById(id);
     }
 
+    @Override
+    public User getUserByToken(String token) {
+
+
+        return userMapper.getUserByToken(token);
+    }
+
     /**
      * 判断此接口是否是用户拥有的
      * @param UrlName

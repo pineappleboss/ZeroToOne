@@ -5,6 +5,8 @@
         <result column="id" property="id"></result>
         <result column="name" property="name"></result>
         <result column="role" property="desc"></result>
+        <result column="access" property="access"></result>
+        <result column="avatar" property="avatar"></result>
     </resultMap>
 <!--用户登录-->
     <select id="getByUsernameAndPassword" resultType="com.example.model.User">
@@ -33,5 +35,8 @@
     </select>
     <select id="getUserById" parameterType="String" resultType="com.example.model.User">
         select * from user where id=#{id}
+    </select>
+    <select id="getUserByToken" resultType="com.example.model.User">
+        select * from User where username=#{token}
     </select>
 </mapper>

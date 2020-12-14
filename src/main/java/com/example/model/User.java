@@ -8,8 +8,11 @@ import java.util.List;
 public class User {
     private int id;
     private String name;
-    private String username;
+    private String access;
+    private String userName;
     private String password;
     private String salt;
     private String role;
+    private String avatar;
+    private String token;
 }
