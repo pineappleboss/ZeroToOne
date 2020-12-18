@@ -1,10 +1,11 @@
 package com.example.controller;
 
-import com.example.config.SessionManager;
 import com.example.model.AdminMenu;
 import com.example.model.User;
 import com.example.service.UserService;
 import com.example.utils.AjaxResult;
+import com.example.utils.JWTUtil;
+import com.example.utils.MD5Util;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -19,7 +20,11 @@ import org.springframework.web.util.HtmlUtils;
 import javax.annotation.Resource;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @author tkq
@@ -29,8 +34,6 @@ import java.util.List;
 public class UserController {
     @Resource
     UserService userServiceImpl;
-    @Autowired
-    SessionManager sessionManager;
     /**
      * 用户登录
      * 核心在于 subject.login(usernamePasswordToken);
@@ -41,22 +44,22 @@ public class UserController {
     @PostMapping("api/login")
     public AjaxResult login(@RequestBody User user){
         //获取subject
-        Subject subject= SecurityUtils.getSubject();
 
-        UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(user.getUserName(), user.getPassword());
-        //设置
-        usernamePasswordToken.setRememberMe(true);
         //执行认证动作
-        try {
-            subject.login(usernamePasswordToken);
-            User u=userServiceImpl.getByName(user.getUserName());u.setToken(user.getUserName());
-            return new AjaxResult(200,u,"登录成功");
-        } catch (AuthenticationException e) {
-            String message = "账号密码错误";
-            return new AjaxResult(500,user,"登录失败，用户名或密码有误");
-        }
-
-
+            String salt="qqq";
+            user.setSalt(salt);
+            //加盐加密
+            String pwd= MD5Util.MD5Encode(user.getPassword() + salt,"UTF-8");
+            user.setPassword(pwd);
+            User u=userServiceImpl.get(user.getUserName(),user.getPassword());
+            //颁发凭证
+            u.setToken(JWTUtil.sign(u.getUserName(), u.getId()));
+            if(u!=null) {
+                return new AjaxResult(200, u, "登录成功");
+            }else {
+                String message = "账号密码错误";
+                return new AjaxResult(500, user, "登录失败，用户名或密码有误");
+            }
     }
 
     /**
@@ -70,10 +73,11 @@ public class UserController {
     public  AjaxResult register(@RequestBody User user){
         user.setUserName(HtmlUtils.htmlEscape(user.getUserName()));
         //获取盐
-        String salt=new SecureRandomNumberGenerator().nextBytes().toString();
+        String salt=user.getUserName();
         user.setSalt(salt);
         //加盐加密
-        String pwd=new SimpleHash("md5",user.getPassword(),salt,2).toString();
+        String pwd= MD5Util.MD5Encode(user.getPassword() + salt,"UTF-8");
+//       String pwd=new SimpleHash("md5",user.getPassword(),salt,2).toString();
         user.setPassword(pwd);
 
         userServiceImpl.add(user);
@@ -137,8 +141,8 @@ public class UserController {
     }
     @ApiOperation("根据token获取用户信息，主要用来判断用户是否登录")
     @GetMapping("/api/get_info")
-    public AjaxResult getUserByToken(@RequestParam("token") String token){
-        User user=userServiceImpl.getUserByToken(token);
+    public AjaxResult getUserByToken(){
+        User user=userServiceImpl.getUserById("1");
         if(user!=null){
             return new AjaxResult(200,user,"用户查询成功");
         }else{
@@ -149,7 +153,7 @@ public class UserController {
     @ApiOperation("获取用户信息")
     @GetMapping("api/message/count")
     public AjaxResult getCount(){
-        User user=userServiceImpl.getUserByToken("abc");
+        User user=userServiceImpl.getUserById("1");
         if(user!=null){
             return new AjaxResult(200,user,"用户查询成功");
         }else{
@@ -157,5 +161,6 @@ public class UserController {
         }
 
     }
+
 
 }

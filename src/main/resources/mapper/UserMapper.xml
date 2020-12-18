@@ -16,7 +16,7 @@
     <insert id="save" parameterType="com.example.model.User">
         INSERT INTO auth.`user`
         (username, password, salt)
-        VALUES(#{username}, #{password}, #{salt});
+        VALUES(#{userName}, #{password}, #{salt});
     </insert>
     <select id="findByUsername" parameterType="String" resultType="com.example.model.User">
         select * from auth.`user` where username = #{username}
