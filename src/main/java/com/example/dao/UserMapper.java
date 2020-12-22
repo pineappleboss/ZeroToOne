@@ -33,4 +33,7 @@ public interface UserMapper {
     User getUserById(String id);
 
     User getUserByToken(String token);
+
+    List<Role> getRoleById(String id);
+
 }

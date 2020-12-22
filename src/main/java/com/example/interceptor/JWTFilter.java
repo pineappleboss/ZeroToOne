@@ -27,6 +27,7 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
     @Override
     protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) throws UnauthorizedException {
         //判断请求的请求头是否带上 "Token"
+        HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         if (isLoginAttempt(request, response)) {
             //如果存在，则进入 executeLogin 方法执行登入，检查 token 是否正确
             try {
@@ -37,9 +38,11 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
                 responseError(response, e.getMessage());
                 return false; //产生异常则阻止请求的继续执行
             }
+        }else if(httpServletRequest.getRequestURL().equals("http:localhost:8088/api/login")){
+            return true;
         }
         //如果请求头不存在 Token，则可能是执行登陆操作或者是游客状态访问，无需检查 token，直接返回 true
-        return true;
+        return false;
     }
 
     /**

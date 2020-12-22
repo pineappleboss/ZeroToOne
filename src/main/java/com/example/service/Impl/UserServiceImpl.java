@@ -4,6 +4,7 @@ package com.example.service.Impl;
 import com.example.dao.UserMapper;
 import com.example.model.AdminMenu;
 import com.example.model.Permission;
+import com.example.model.Role;
 import com.example.model.User;
 import com.example.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,6 +86,11 @@ public class UserServiceImpl implements UserService {
 
 
         return userMapper.getUserByToken(token);
+    }
+
+    @Override
+    public List<Role> getRoleById(String id) {
+        return userMapper.getRoleById(id);
     }
 
     /**

@@ -15,11 +15,12 @@ import java.io.UnsupportedEncodingException;
 import java.util.Date;
 
 /**
- * JWT token 工具类
- *
- * @author yangfeng
- * @Date 2019-09-17
- */
+* @Description: JWT工具类
+* @Param: 
+* @return: 
+* @Author: tiankaiqiang
+* @Date: 2020/12/21
+*/
 @Component
 public class JWTUtil {
     //过期时间

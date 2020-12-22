@@ -1,6 +1,7 @@
 package com.example.controller;
 
 import com.example.model.AdminMenu;
+import com.example.model.Role;
 import com.example.model.User;
 import com.example.service.UserService;
 import com.example.utils.AjaxResult;
@@ -161,6 +162,14 @@ public class UserController {
         }
 
     }
-
+    @GetMapping("/api/role")
+    public AjaxResult getRole(String id){
+        List<Role> roles=userServiceImpl.getRoleById(id);
+        if(roles!=null){
+            return new AjaxResult(200,roles,"角色列表查询成功");
+        }else{
+            return new AjaxResult(500,roles,"角色列表查询成功");
+        }
+    }
 
 }

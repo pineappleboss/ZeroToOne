@@ -39,4 +39,8 @@
     <select id="getUserByToken" resultType="com.example.model.User">
         select * from User where username=#{token}
     </select>
+
+    <select id="getRoleById" resultType="com.example.model.Role">
+        select * from Role
+    </select>
 </mapper>

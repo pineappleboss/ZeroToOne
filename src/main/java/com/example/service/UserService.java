@@ -2,6 +2,7 @@ package com.example.service;
 
 import com.example.model.AdminMenu;
 import com.example.model.Permission;
+import com.example.model.Role;
 import com.example.model.User;
 
 import java.util.List;
@@ -24,4 +25,6 @@ public interface UserService {
     public User getUserById(String id);
 
     public User getUserByToken(String token);
+
+    public List<Role> getRoleById(String id);
 }
