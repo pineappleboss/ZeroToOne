@@ -27,4 +27,10 @@ public interface UserService {
     public User getUserByToken(String token);
 
     public List<Role> getRoleById(String id);
+
+    public List<Role> getRole();
+
+    public int saveUser(User user);
+
+    public List<Permission> getUserPermission(String id);
 }

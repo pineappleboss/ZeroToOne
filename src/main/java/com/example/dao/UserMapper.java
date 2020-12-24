@@ -1,9 +1,6 @@
 package com.example.dao;
 
-import com.example.model.AdminMenu;
-import com.example.model.Permission;
-import com.example.model.Role;
-import com.example.model.User;
+import com.example.model.*;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -36,4 +33,13 @@ public interface UserMapper {
 
     List<Role> getRoleById(String id);
 
+    List<Role> getRole();
+
+    int insRoles(List<UserRoleMap> userRoleMaps);
+
+    int delRole(String id);
+
+    int updateUser(User user);
+
+    List<Permission> getAllPermission(String id);
 }

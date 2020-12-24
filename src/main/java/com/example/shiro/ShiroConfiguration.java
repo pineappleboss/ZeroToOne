@@ -45,7 +45,7 @@ public class ShiroConfiguration {
         filterRuleMap.put("/api/login", "anon");
         filterRuleMap.put("/api/register", "anon");
 
-        filterRuleMap.put("/api/swagger-ui.html", "anon");
+        filterRuleMap.put("/swagger-ui.html", "anon");
 
         filterRuleMap.put("/**", "authc");
 

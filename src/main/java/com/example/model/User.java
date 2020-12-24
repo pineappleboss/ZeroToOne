@@ -8,11 +8,13 @@ import java.util.List;
 public class User {
     private String id;
     private String name;
-    private String access;
+    private String accesses;
+    private String[] access;
     private String userName;
     private String password;
     private String salt;
-    private String role;
+    private List<Role> role;
     private String avatar;
     private String token;
+    private String perssion;
 }

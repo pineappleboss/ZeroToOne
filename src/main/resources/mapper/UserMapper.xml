@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.example.dao.UserMapper">
-    <resultMap id="user" type="com.example.model.User">
-        <result column="id" property="id"></result>
-        <result column="name" property="name"></result>
-        <result column="role" property="desc"></result>
-        <result column="access" property="access"></result>
-        <result column="avatar" property="avatar"></result>
-    </resultMap>
+<!--    <resultMap id="user" type="com.example.model.User">-->
+<!--        <result column="id" property="id"></result>-->
+<!--        <result column="name" property="name"></result>-->
+<!--        <result column="role" property="desc"></result>-->
+<!--        <result column="accesses" property="access"></result>-->
+<!--        <result column="avatar" property="avatar"></result>-->
+<!--    </resultMap>-->
 <!--用户登录-->
     <select id="getByUsernameAndPassword" resultType="com.example.model.User">
     select * from user where username=#{username} and password=#{password}
@@ -23,7 +23,7 @@
     </select>
 <!--    查询所有用户信息-->
     <select id="findAllUser" resultType="com.example.model.User">
-        select a.id ,a.name ,b.desc as role from `user` a , `role` b ,user_role_rep  where a.id=user_role_rep.uid and b.id =user_role_rep.id
+        select * from user
     </select>
 <!--   查询用户菜单-->
     <select id="getAdminMenu" parameterType="com.example.model.User" resultType="com.example.model.AdminMenu">
@@ -41,6 +41,23 @@
     </select>
 
     <select id="getRoleById" resultType="com.example.model.Role">
+        select * from Role where id in(select rid from user_role_rep where uid = #{id})
+    </select>
+    <select id="getRole" resultType="com.example.model.Role">
         select * from Role
     </select>
+    <select id="getAllPermission" resultType="com.example.model.Permission">
+        select * from permission
+    </select>
+    <delete id="delRole" >
+        delete from user_role_rep where uid=#{id}
+    </delete>
+    <update id="updateUser" parameterType="com.example.model.User">
+        update user set name=#{name},username=#{userName},perssion=#{perssion} where id = #{id}
+    </update>
+    <insert id="insRoles" parameterType="com.example.model.UserRoleMap">
+        <foreach collection="list" item="item">
+            insert into user_role_rep (uid,rid) values(#{item.uid}, #{item.rid})
+        </foreach>
+    </insert>
 </mapper>

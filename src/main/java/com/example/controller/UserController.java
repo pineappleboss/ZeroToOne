@@ -9,23 +9,12 @@ import com.example.utils.JWTUtil;
 import com.example.utils.MD5Util;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.crypto.SecureRandomNumberGenerator;
-import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.subject.Subject;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.HtmlUtils;
 
 import javax.annotation.Resource;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
-import java.io.Serializable;
-import java.io.UnsupportedEncodingException;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * @author tkq
@@ -53,9 +42,10 @@ public class UserController {
             String pwd= MD5Util.MD5Encode(user.getPassword() + salt,"UTF-8");
             user.setPassword(pwd);
             User u=userServiceImpl.get(user.getUserName(),user.getPassword());
-            //颁发凭证
-            u.setToken(JWTUtil.sign(u.getUserName(), u.getId()));
+
             if(u!=null) {
+                //颁发凭证
+                u.setToken(JWTUtil.sign(u.getUserName(), u.getId()));
                 return new AjaxResult(200, u, "登录成功");
             }else {
                 String message = "账号密码错误";
@@ -78,7 +68,6 @@ public class UserController {
         user.setSalt(salt);
         //加盐加密
         String pwd= MD5Util.MD5Encode(user.getPassword() + salt,"UTF-8");
-//       String pwd=new SimpleHash("md5",user.getPassword(),salt,2).toString();
         user.setPassword(pwd);
 
         userServiceImpl.add(user);
@@ -143,13 +132,12 @@ public class UserController {
     @ApiOperation("根据token获取用户信息，主要用来判断用户是否登录")
     @GetMapping("/api/get_info")
     public AjaxResult getUserByToken(){
-        User user=userServiceImpl.getUserById("1");
+        User user=userServiceImpl.getUserById("5");
         if(user!=null){
             return new AjaxResult(200,user,"用户查询成功");
         }else{
             return new AjaxResult(500,null,"用户查询失败");
         }
-
     }
     @ApiOperation("获取用户信息")
     @GetMapping("api/message/count")
@@ -160,10 +148,9 @@ public class UserController {
         }else{
             return new AjaxResult(500,user,"用户查询失败");
         }
-
     }
-    @GetMapping("/api/role")
-    public AjaxResult getRole(String id){
+    @GetMapping("/api/role/{id}")
+    public AjaxResult getRoleByid(@PathVariable("id") String id){
         List<Role> roles=userServiceImpl.getRoleById(id);
         if(roles!=null){
             return new AjaxResult(200,roles,"角色列表查询成功");
@@ -171,5 +158,30 @@ public class UserController {
             return new AjaxResult(500,roles,"角色列表查询成功");
         }
     }
+    @GetMapping("/api/role")
+    public AjaxResult getRole(){
+        List<Role> roles=userServiceImpl.getRole();
+        if(roles!=null){
+            return new AjaxResult(200,roles,"角色列表查询成功");
+        }else{
+            return new AjaxResult(500,roles,"角色列表查询成功");
+        }
+    }
+    /**
+    * @Description: 修改用户权限
+    * @Param: [user, roles]
+    * @return: com.example.utils.AjaxResult
+    * @Author: tiankaiqiang
+    * @Date: 2020/12/22
+    */
+    @PutMapping("/api/user")
+    public AjaxResult updateRole(@RequestBody   User user){
+        userServiceImpl.saveUser(user);
+        return new AjaxResult(200,user,"角色列表查询成功");
+    }
+    @GetMapping("/api/persission/{id}")
+    public AjaxResult getUserPersisson(@PathVariable("id") String id){
 
+        return new AjaxResult(200,userServiceImpl.getUserPermission(id),"角色列表查询成功");
+    }
 }
