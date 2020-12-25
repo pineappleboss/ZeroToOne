@@ -4,7 +4,13 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
-
+/**
+* @Description: 跨域
+* @Param: 
+* @return: 
+* @Author: tiankaiqiang
+* @Date: 2020/12/25
+*/
 @Configuration
 public class MyWebConfigurer extends WebMvcConfigurationSupport {
     @Override

@@ -8,6 +8,6 @@ import java.util.List;
  * @author tkq
  */
 public interface LibraryService {
-    List<Book> getAllBooks();
+    List<Book> getAllBooks(String id);
     int saveBook(Book book);
 }

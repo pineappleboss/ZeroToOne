@@ -10,20 +10,19 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import java.util.List;
 
-@CrossOrigin
     @RestController
     public class LibraryController {
         @Resource
         LibraryService libraryServiceImpl;
-        @GetMapping("/api/books")
-        public  AjaxResult getUser(){
-            List<Book> books=libraryServiceImpl.getAllBooks();
+        @GetMapping("/api/book")
+        public  AjaxResult getBooks(@RequestParam(value = "id",required = false) String id){
+            List<Book> books=libraryServiceImpl.getAllBooks(id);
             if(books.size()>0){
                 return new AjaxResult(200,books,"");
             }
             return new AjaxResult();
         }
-        @PostMapping("/api/books")
+        @PostMapping("/api/book")
         public  AjaxResult saveBook(@RequestBody Book book){
             int status=libraryServiceImpl.saveBook(book);
             if(status==1){

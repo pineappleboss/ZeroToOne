@@ -25,7 +25,7 @@ import java.util.Date;
 public class JWTUtil {
     //过期时间
 //    @Value("${jwt.expire}")
-    private static Long expire = 6000L;
+    private static Long expire = 100000L;
 
     // 秘钥
 //    @Value("${jwt.secret}")

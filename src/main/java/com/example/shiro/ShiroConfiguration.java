@@ -44,12 +44,11 @@ public class ShiroConfiguration {
         Map<String, String> filterRuleMap = new HashMap<>();
         filterRuleMap.put("/api/login", "anon");
         filterRuleMap.put("/api/register", "anon");
-
         filterRuleMap.put("/swagger-ui.html", "anon");
-
+        filterRuleMap.put("/webjars/**", "anon");
+        filterRuleMap.put("/v2/api-docs", "anon");
+        filterRuleMap.put("/swagger-resources/**", "anon");
         filterRuleMap.put("/**", "authc");
-
-        // 所有请求通过我们自己的JWT Filter
         filterRuleMap.put("/**", "jwt");
 
         factoryBean.setLoginUrl("/api/login");//没有登录的用户请求需要登录的资源时自动跳转到该路径

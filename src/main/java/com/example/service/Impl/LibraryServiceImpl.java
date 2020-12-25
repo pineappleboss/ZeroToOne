@@ -14,14 +14,20 @@ public class LibraryServiceImpl implements LibraryService {
     @Autowired
     LibraryMapper mapper;
     @Override
-    public List<Book> getAllBooks() {
+    public List<Book> getAllBooks(String id) {
 
-        return mapper.getAll();
+        return mapper.getAll(id);
     }
 
     @Override
     public int saveBook(Book book) {
-        book.setId(UUID.randomUUID().toString());
-        return mapper.saveBook(book);
+        if(book.getId()==null){
+            book.setId(UUID.randomUUID().toString());
+            mapper.saveBook(book);
+        }else{
+            mapper.updateBook(book);
+        }
+
+        return 1;
     }
 }

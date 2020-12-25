@@ -57,7 +57,7 @@
     </update>
     <insert id="insRoles" parameterType="com.example.model.UserRoleMap">
         <foreach collection="list" item="item">
-            insert into user_role_rep (uid,rid) values(#{item.uid}, #{item.rid})
+            insert into user_role_rep (uid,rid) values(#{item.uid}, #{item.rid});
         </foreach>
     </insert>
 </mapper>

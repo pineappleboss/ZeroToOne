@@ -4,10 +4,16 @@
 
     <select id="getAll" resultType="com.example.model.Book">
         select * from books
+        <if test="id!=null and id!=''">
+            where id=#{id}
+        </if>
     </select>
     <insert id="saveBook" parameterType="com.example.model.Book" >
         INSERT INTO auth.books
         (id, title, author, `date`, press, abs, cid)
         VALUES(#{id}, #{title}, #{author}, #{date}, #{press}, #{abs}, #{cid});
     </insert>
+    <update id="updateBook" parameterType="com.example.model.Book">
+        update books set cover = #{cover},title=#{title},author=#{author},press=#{press},abs=#{abs} where id = #{id}
+    </update>
 </mapper>
