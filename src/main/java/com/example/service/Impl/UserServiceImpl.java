@@ -151,6 +151,6 @@ public class UserServiceImpl implements UserService {
      */
      public boolean is(String UrlName){
 
-            return  true;
+            return  UrlName.isEmpty();
      }
 }
